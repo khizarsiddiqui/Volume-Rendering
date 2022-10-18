@@ -14,3 +14,5 @@
 # the cube geometry as well as how to draw the back- and front-faces of this cube. 
 # You’ll then explore the volume ray casting algorithm and the associated vertex and fragment shaders. 
 # Finally, you’ll learn how to implement 2D slicing of the volumetric data.
+
+# The first step is to read the volumetric data from a folder containing images
