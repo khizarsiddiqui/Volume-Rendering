@@ -19,3 +19,7 @@ culling to compute the dot product of your view direction vector with the normal
 vector of the polygon. For back-facing polygons, the dot product will be negative,
 and those faces can be dropped. OpenGL also provides an easy way to
 do the inverse—cull the front-faces, which is what you use in your algorithm.
+
+For understanding glTexParameter():https://registry.khronos.org/OpenGL-Refpages/gl4/html/glTexParameter.xhtml
+
+For understanding glTexImage3D():https://registry.khronos.org/OpenGL-Refpages/gl4/html/glTexImage3D.xhtml
