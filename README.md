@@ -21,5 +21,14 @@ and those faces can be dropped. OpenGL also provides an easy way to
 do the inverse—cull the front-faces, which is what you use in your algorithm.
 
 For understanding glTexParameter():https://registry.khronos.org/OpenGL-Refpages/gl4/html/glTexParameter.xhtml
-
 For understanding glTexImage3D():https://registry.khronos.org/OpenGL-Refpages/gl4/html/glTexImage3D.xhtml
+
+# RayCube
+The color cube has six faces, each of which can each be drawn as two triangles for a total of 6×6, or 36, vertices. But rather than specify all 36 vertices, you specify the cube’s eight vertices and then define the triangles using an indices array.
+
+For understanding glVertexAttribPointer():https://registry.khronos.org/OpenGL-Refpages/gl4/html/glVertexAttribPointer.xhtml
+For understanding glTexImage2D():https://registry.khronos.org/OpenGL-Refpages/gl4/html/glTexImage2D.xhtml
+For understanding glFramebufferTexture2D():https://registry.khronos.org/OpenGL-Refpages/es2.0/xhtml/glFramebufferTexture2D.xml
+For understanding glBindRenderbuffer():https://registry.khronos.org/OpenGL-Refpages/es2.0/xhtml/glBindRenderbuffer.xml
+For understanding glRenderbufferStorage():https://registry.khronos.org/OpenGL-Refpages/gl4/html/glRenderbufferStorage.xhtml
+For understanding glFramebufferRenderbuffer():https://registry.khronos.org/OpenGL-Refpages/gl4/html/glFramebufferRenderbuffer.xhtml

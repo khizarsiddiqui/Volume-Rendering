@@ -1,5 +1,5 @@
 # first commit
-# some of the topics covered in this project:
+# Some of the topics covered in this project:
 # • Using GLSL for GPU computations
 # • Creating vertex and fragment shaders
 # • Representing 3D volumetric data and using the volume ray casting algorithm
