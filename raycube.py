@@ -137,6 +137,80 @@ class RayCube:
         # FBO
         self.initFBO()
 
+# Rendering the Back-Faces of the Cube
+    def renderBackFace(self, pMatrix, mvMatrix):
+        """renders back-face of ray-cube to a texture and returns it"""
+        # render to FBO
+        glBindFramebuffer(GL_FRAMEBUFFER, self.fboHandle)
+        # set active texture
+        glActiveTexture(GL_TEXTURE0)
+        # bind to fbo1 texture
+        glBindTexture(GL_TEXTURE_2D, self.texHandle)
+
+        # render cube with face culling enabled
+        self.renderCube(pMatrix, mvMatrix, self.program, True)
+        
+        # unbind texture
+        glBindTexture(GL_TEXTURE_2D, 0)
+        glBindFramebuffer(GL_FRAMEBUFFER, 0)
+        glBindRenderbuffer(GL_RENDERBUFFER, 0)
+
+        # return texture id 
+        return self.texHandle
+
+# Rendering the Front-Faces of the Cube
+    def renderFrontFace(self, pMatrix, mvMatrix, program):
+        """render front face of ray-cube"""
+        # no face culling
+        self.renderCube(pMatrix, mvMatrix, program, False)
+
+# Rendering the Whole Cube
+    def renderCube(self, pMatrix, mvMatrix, program, cullFace):
+        """render cube use face culling if flag set"""
+        
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+        
+        # set shader program
+        glUseProgram(program)
+        
+        # set proj matrix
+        glUniformMatrix4fv(glGetUniformLocation(program, b'uPMatrix'), 
+                           1, GL_FALSE, pMatrix)
+
+        # set modelview matrix
+        glUniformMatrix4fv(glGetUniformLocation(program, b'uMVMatrix'), 
+                           1, GL_FALSE, mvMatrix)
+ 
+        # enable face culling
+        glDisable(GL_CULL_FACE)
+        if cullFace:
+            glFrontFace(GL_CCW)
+            glCullFace(GL_FRONT)
+            glEnable(GL_CULL_FACE)
+
+        # bind VAO
+        glBindVertexArray(self.vao)
+
+        # animated slice
+        # using glDrawElements() because you’re using an index array to render the cube, rather than a vertex array
+        glDrawElements(GL_TRIANGLES, self.nIndices, 
+                       GL_UNSIGNED_SHORT, None)
+
+        # unbind VAO
+        glBindVertexArray(0)
+
+        # reset cull face
+        if cullFace:
+            # disable face culling
+            glDisable(GL_CULL_FACE)
+# The Resize Handler
+    def reshape(self, width, height):
+        self.width = width
+        self.height = height
+        self.aspect = width/float(height)
+        # recreate FBO
+        self.clearFBO()
+        self.initFBO()
 # Creating the Frame Buffer Object
     def initFBO(self): 
         # create frame buffer object
@@ -189,3 +263,40 @@ class RayCube:
         glBindFramebuffer(GL_FRAMEBUFFER, 0)
         glBindRenderbuffer(GL_RENDERBUFFER, 0)
         return
+    
+    def clearFBO(self):
+        """clears old FBO"""
+        # delete FBO
+        if glIsFramebuffer(self.fboHandle):
+            glDeleteFramebuffers(int(self.fboHandle))
+    
+        # delete texture
+        if glIsTexture(self.texHandle):
+            glDeleteTextures(int(self.texHandle))
+            
+
+    def close(self):
+        """call this to free up OpenGL resources"""
+        glBindTexture(GL_TEXTURE_2D, 0)
+        glBindFramebuffer(GL_FRAMEBUFFER, 0)
+        glBindRenderbuffer(GL_RENDERBUFFER, 0)
+    
+        # delete FBO
+        if glIsFramebuffer(self.fboHandle):
+            glDeleteFramebuffers(int(self.fboHandle))
+    
+        # delete texture
+        if glIsTexture(self.texHandle):
+            glDeleteTextures(int(self.texHandle))
+
+        # delete render buffer
+        """
+        if glIsRenderbuffer(self.depthHandle):
+            glDeleteRenderbuffers(1, int(self.depthHandle))
+            """
+        # delete buffers
+        """
+        glDeleteBuffers(1, self._vertexBuffer)
+        glDeleteBuffers(1, &_indexBuffer)
+        glDeleteBuffers(1, &_colorBuffer)
+        """
