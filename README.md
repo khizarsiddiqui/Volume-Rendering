@@ -40,3 +40,10 @@ For understanding glRenderbufferStorage():https://registry.khronos.org/OpenGL-Re
 For understanding glFramebufferRenderbuffer():https://registry.khronos.org/OpenGL-Refpages/gl4/html/glFramebufferRenderbuffer.xhtml
 
 To understand the concept of face-culling:https://learnopengl.com/Advanced-OpenGL/Face-culling
+
+For understanding gl_Position():https://registry.khronos.org/OpenGL-Refpages/gl4/html/gl_Position.xhtml
+
+To understand orthographic & perspective projections:https://www.cprogramming.com/tutorial/opengl_projections.html
+
+# Slice-Render vertex shader
+Because you are slicing perpendicular to the x direction, you want a slice parallel to the yz plane. The 3D vertices coming in to the vertex shader also double as the 3D texture coordinates because they are in the range [0, 1], so the texture coordinates are given as (f, Vx, Vy), where f is the fraction of the slice number in the direction of the x-axis and where Vx and Vy are the vertex coordinates. Unfortunately, the resulting image will appear upside down because the OpenGL coordinate system has its origin at the bottom left, with the y direction pointing up; this is the reverse of what you want. To resolve this problem, you change the texture coordinate t to (1 – t) and use (f, Vx, 1 − Vy).
