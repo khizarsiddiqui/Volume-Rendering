@@ -47,3 +47,6 @@ To understand orthographic & perspective projections:https://www.cprogramming.co
 
 # Slice-Render vertex shader
 Because you are slicing perpendicular to the x direction, you want a slice parallel to the yz plane. The 3D vertices coming in to the vertex shader also double as the 3D texture coordinates because they are in the range [0, 1], so the texture coordinates are given as (f, Vx, Vy), where f is the fraction of the slice number in the direction of the x-axis and where Vx and Vy are the vertex coordinates. Unfortunately, the resulting image will appear upside down because the OpenGL coordinate system has its origin at the bottom left, with the y direction pointing up; this is the reverse of what you want. To resolve this problem, you change the texture coordinate t to (1 – t) and use (f, Vx, 1 − Vy).
+
+# Volrender
+I’m choosing not to pass in the glfw.KEY values directly and using a dictionary to convert these to character values instead, because it’s good practice to reduce dependencies in source files. Currently, the only file in this project that depends on GLFW is volrender.py. If you were to pass GLFW-specific types into other code, they would need to import and depend on the GLFW library, but if you were to switch to yet another OpenGL windowing toolkit, the code would become messy.
